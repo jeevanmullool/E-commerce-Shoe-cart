@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"redkart/initializers"
@@ -30,6 +29,16 @@ var adminbody struct {
 	Phone    string
 }
 
+// AdminLogin godoc
+//
+//	@Summary		API to Login for admins
+//	@Description	get string by ID
+//	@Tags			admin
+//	@Accept			json
+//	@Produce		json
+//	@Param			admin	body		models.Admin	true	"Account ID"
+//	@Success		200		{object}	models.Admin
+//	@Router			/admin/adminlogin [post]
 func AdminLogin(c *gin.Context) { // admin login page post
 	var adminbody struct {
 		Email    string
@@ -127,7 +136,6 @@ func AdminSignup(c *gin.Context) {
 }
 
 func BlockUser(c *gin.Context) {
-	fmt.Println("jk")
 	params := c.Param("id")
 	var user models.User
 	initializers.DB.Raw("UPDATE users SET block_status=true where id=?", params).Scan(&user)

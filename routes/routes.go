@@ -9,6 +9,7 @@ import (
 )
 
 func UserRoutes(c *gin.Engine) {
+
 	user := c.Group("/user")
 	{
 		user.POST("/signup", controllers.Signup)
@@ -44,7 +45,7 @@ func AdminRoutes(c *gin.Engine) {
 		admin.GET("/listuser", middleware.AdminAuth, controllers.ListUsers)
 		//admin.POST("/addproduct", middleware.AdminAuth, controllers.AddProduct)
 		admin.POST("/addproduct", middleware.AdminAuth, controllers.ProductAdding)
-		admin.DELETE("/deleteproduct/:id", middleware.AdminAuth, controllers.DeleteProductById)
+		admin.DELETE("/deleteproduct", middleware.AdminAuth, controllers.DeleteProductById)
 		admin.GET("/vieworders", middleware.AdminAuth, controllers.ViewOrders)
 		admin.POST("/addcoupon", middleware.AdminAuth, controllers.AddCoupon)
 		admin.PATCH("/editoffer", middleware.AdminAuth, controllers.EditOffer)

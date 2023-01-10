@@ -55,11 +55,23 @@ func Signup(c *gin.Context) {
 	}
 
 	//respond
-	c.JSON(http.StatusOK, gin.H{})
+	c.JSON(http.StatusOK, gin.H{
+		"msg": "Signup successfully",
+	})
 
 	//user login
 }
 
+// UserLogin godoc
+//
+//	@Summary		API to Login for users
+//	@Description	get string by ID
+//	@Tags			User
+//	@Accept			json
+//	@Produce		json
+//	@Param			admin	body		models.User	true	"User ID"
+//	@Success		200		{object}	models.User
+//	@Router			/user/login [post]
 func Login(c *gin.Context) {
 	//get the email& password of req body
 	var body struct {

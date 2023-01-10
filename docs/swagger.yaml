@@ -1,0 +1,187 @@
+definitions:
+  models.Address:
+    properties:
+      address_id:
+        type: integer
+      area:
+        type: string
+      city:
+        type: string
+      house:
+        type: string
+      landmark:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: integer
+      pincode:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  models.Admin:
+    properties:
+      Email:
+        type: string
+      Id:
+        type: integer
+      Name:
+        type: string
+      Password:
+        type: string
+      Phone:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      brand:
+        description: CategoryID uint
+        type: string
+      category:
+        type: string
+      color:
+        type: string
+      description:
+        type: string
+      discount:
+        type: integer
+      price:
+        type: integer
+      product_id:
+        type: integer
+      product_name:
+        type: string
+      selling_Price:
+        type: integer
+      size:
+        description: Brand_id   uint `json:"brand_id" `
+        type: integer
+      stock:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      address:
+        $ref: '#/definitions/models.Address'
+      address_id:
+        type: integer
+      block_status:
+        type: boolean
+      city:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      first_name:
+        maxLength: 50
+        minLength: 2
+        type: string
+      id:
+        type: integer
+      last_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      pincode:
+        type: integer
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - phone
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /admin/adminlogin:
+    post:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: Account ID
+        in: body
+        name: admin
+        required: true
+        schema:
+          $ref: '#/definitions/models.Admin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Admin'
+      summary: API to Login for admins
+      tags:
+      - admin
+  /admin/deleteproduct:
+    delete:
+      consumes:
+      - application/json
+      operationId: delete-product-by-id
+      parameters:
+      - description: product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: delete a product by ID
+      tags:
+      - admin
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: User ID
+        in: body
+        name: admin
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: API to Login for users
+      tags:
+      - User
+  /user/productlist:
+    get:
+      operationId: get-all-products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: get all items in the product list
+      tags:
+      - User
+swagger: "2.0"

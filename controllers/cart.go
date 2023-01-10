@@ -27,10 +27,10 @@ func AddToCart(c *gin.Context) {
 	//err := initializers.DB.First(&UsersID, "email = ?", user)
 
 	if errors.Is(err.Error, gorm.ErrRecordNotFound) {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(400, gin.H{
 			"message": "user coudnt find",
 		})
-
+		return
 	}
 	var ProdtDetails struct {
 		Product_id uint
@@ -75,7 +75,7 @@ func AddToCart(c *gin.Context) {
 		if l.ProductID == prodid {
 			fmt.Println("in")
 			initializers.DB.Raw("select quantity from carts where product_id=? and user_id=?", ProdtDetails.Product_id, UsersID).Scan(&Cart)
-			totl := (prodqua + cart.Quantity) * products.Price
+			totl := (prodqua + cart.Quantity) * products.Selling_Price
 			totqua := prodqua + cart.Quantity
 			initializers.DB.Raw("update carts set quantity=?,total=? where product_id=? and user_id=? ", totqua, totl, prodid, UsersID).Scan(&Cart)
 
@@ -110,23 +110,20 @@ func ViewCart(c *gin.Context) {
 	fmt.Println("In viewcart")
 	fmt.Println(UsersID)
 	if errors.Is(err.Error, gorm.ErrRecordNotFound) {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "user coudnt find",
 		})
 
 	}
 	var cart []struct {
-		ID           int
+		UserId       int
 		Product_id   int
 		Product_Name string
 		Brand_Name   string
 		Total        int
 		Quantity     int
 	}
-	initializers.DB.Select("user_id", "product_id", "product_name", "brand_name", "total", "quantity").Table("carts").Where("user_id=?", UsersID).Find(&cart)
-	c.JSON(200, gin.H{
-		"Products": cart,
-	})
+	initializers.DB.Select("*").Table("carts").Where("user_id=?", UsersID).Find(&cart)
 
 	for _, i := range cart {
 		sum := i.Total
@@ -135,6 +132,7 @@ func ViewCart(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status":   true,
 		"Subtotal": Subtotal,
+		"Products": cart,
 	})
 
 }

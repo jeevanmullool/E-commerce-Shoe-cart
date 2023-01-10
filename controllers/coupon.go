@@ -46,6 +46,9 @@ func RedeemCoupon(c *gin.Context) {
 	useremail := c.GetString("user")
 	initializers.DB.Raw("select id from users where email=?", useremail).Scan(&user)
 
+	var cartt models.Cart
+	initializers.DB.Raw("select * from cart where user_id=?", user.ID).Scan(&cartt)
+
 	coup_code := c.Query("coupon_code")
 	var coup models.Coupon
 	initializers.DB.Raw("select * from coupons where coupon_code=?", coup_code).Scan(&coup)
@@ -57,7 +60,8 @@ func RedeemCoupon(c *gin.Context) {
 
 	if !coup.Status && coup.Exp_date > time.Now().Unix() && coup.Min_value < grandtotal {
 		redeemed := grandtotal - coup.Discount
-		initializers.DB.Raw("update carts set total=? where user_id=?", redeemed, user.ID)
+		initializers.DB.Raw("update carts set total=? where user_id=?", redeemed, user.ID).Scan(&cartt)
+		initializers.DB.Raw("update coupons set status=? where coupon_code=?", true, coup_code).Scan(&coup)
 		c.JSON(200, gin.H{
 			"msg":   "Coupon claimed successfully",
 			"Total": redeemed,

@@ -10,46 +10,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*var productbody struct {
-	Product_name string
-	brand        string
-	Price        uint
-	Stock        uint
-	Color        string
-	Description  string
-	Category     string
-	Size         uint
-}*/
-
-/*func AddProduct(c *gin.Context) {
-
-	if c.Bind(&productbody) == nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
-		})
-
-		return
-	}
-
-	products := models.Product{Product_name: productbody.Product_name, Brand: productbody.Brand, Price: productbody.Price, Stock: productbody.Stock, Color: productbody.Color, Description: productbody.Description, Category: productbody.Category, Size: productbody.Size}
-	result := initializers.DB.Create(&products)
-
-	if result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to add product",
-		})
-		return
-	}
-
-	//respond
-	c.JSON(http.StatusOK, gin.H{})
-}*/
-
+// @Summary get all items in the product list
+// @ID get-all-products
+// @Tags User
+// @Produce json
+// @Success 200 {object} models.Product
+// @Router /user/productlist [get]
+// product listing with pagination , we can input page number to list products in different pages
 func ProductList(c *gin.Context) {
+	pagestring := c.Query("page")
+	page, _ := strconv.Atoi(pagestring)
+	offset := (page - 1) * 3
 	var product []models.Product
-	initializers.DB.Find((&product))
+	initializers.DB.Limit(3).Offset(offset).Find(&product)
 	c.JSON(http.StatusOK, product)
 }
+
+// func ProductList(c *gin.Context) {
+// 	var product []models.Product
+// 	initializers.DB.Find((&product))
+// 	c.JSON(http.StatusOK, product)
+// }
 
 var Products []struct {
 	Product_ID    uint
@@ -127,13 +108,22 @@ func ProductAdding(c *gin.Context) { //Admin
 
 //delete product
 
+// @Summary delete a product by ID
+// @ID delete-product-by-id
+// @Tags admin
+// @Accept json
+// @Produce json
+// @Param id path string true "product ID"
+// @Success 200 {object} models.Product
+// @Faillure 400 {object} message
+// @Router /admin/deleteproduct [delete]
 func DeleteProductById(c *gin.Context) { //admin
-	params := c.Param("id")
+	params := c.Query("id")
 	var products models.Product
 	var count uint
 	initializers.DB.Raw("select count(product_id) from products where product_id=?", params).Scan(&count)
-	if count <= 0 {
-		c.JSON(404, gin.H{
+	if count == 0 {
+		c.JSON(400, gin.H{
 			"msg": "product doesnot exist",
 		})
 		c.Abort()
@@ -142,7 +132,7 @@ func DeleteProductById(c *gin.Context) { //admin
 
 	record := initializers.DB.Raw("delete from products where product_id=?", params).Scan(&products)
 	if record.Error != nil {
-		c.JSON(404, gin.H{"error": record.Error.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": record.Error.Error()})
 		c.Abort()
 		return
 	}
