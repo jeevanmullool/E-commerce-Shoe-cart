@@ -15,7 +15,7 @@ func UserRoutes(c *gin.Engine) {
 		user.POST("/signup", controllers.Signup)
 		user.POST("/login", controllers.Login)
 		user.GET("/validateuser", middleware.UserAuth, controllers.Validate)
-		user.GET("/productlist", controllers.ProductList)
+		user.GET("/products", controllers.ProductList)
 		user.POST("/login/otpverify", controllers.SendOtp)
 		user.POST("/login/otpcheck", controllers.CheckOtp)
 		user.POST("/addtocart", middleware.UserAuth, controllers.AddToCart)

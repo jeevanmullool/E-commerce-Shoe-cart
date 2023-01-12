@@ -106,6 +106,27 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 paths:
+  /admin//userdata/block/{id}:
+    put:
+      consumes:
+      - application/json
+      operationId: block-user-by-id
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: block user by ID
+      tags:
+      - admin
   /admin/adminlogin:
     post:
       consumes:

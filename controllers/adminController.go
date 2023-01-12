@@ -5,6 +5,7 @@ import (
 	"os"
 	"redkart/initializers"
 	"redkart/models"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -135,6 +136,14 @@ func AdminSignup(c *gin.Context) {
 	//user login
 }
 
+// @Summary block user by ID
+// @ID block-user-by-id
+// @Tags admin
+// @Accept json
+// @Produce json
+// @Param id path string true "user ID"
+// @Success 200 {object} models.User
+// @Router /admin//userdata/block/{id} [put]
 func BlockUser(c *gin.Context) {
 	params := c.Param("id")
 	var user models.User
@@ -149,20 +158,16 @@ func UnBlockUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"msg": "Unblocked succesfully"})
 }
 
-//initializers.DB.First(&user, "UPDATE users SET block_status=true where id=?", params).Scan(&user)
-
 func ListUsers(c *gin.Context) {
+	// var user []models.User
+	// initializers.DB.Find((&user))
+	// c.JSON(http.StatusOK, user)
+	pagestring := c.Query("page")
+	page, _ := strconv.Atoi(pagestring)
+	offset := (page - 1) * 3
 	var user []models.User
-	initializers.DB.Find((&user))
-	for _, i := range user {
-		c.JSON(http.StatusOK, gin.H{
-			"user id":      i.ID,
-			"user email":   i.Email,
-			"user phone":   i.Phone,
-			"block status": i.Block_status,
-		})
-
-	}
+	initializers.DB.Limit(3).Offset(offset).Find(&user)
+	c.JSON(http.StatusOK, user)
 }
 
 func ValidateAdmin(c *gin.Context) {

@@ -19,11 +19,6 @@ func ViewOrders(c *gin.Context) {
 	})
 }
 
-/*func CancelOrders(c *gin.Context) {
-	orderid := c.Query("id")
-}
-*/
-
 func Cancelorders(c *gin.Context) {
 	var user models.User
 	userEmail := c.GetString("user")

@@ -15,7 +15,7 @@ import (
 // @Tags User
 // @Produce json
 // @Success 200 {object} models.Product
-// @Router /user/productlist [get]
+// @Router /user/products [get]
 // product listing with pagination , we can input page number to list products in different pages
 func ProductList(c *gin.Context) {
 	pagestring := c.Query("page")
