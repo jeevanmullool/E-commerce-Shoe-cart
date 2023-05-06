@@ -12,7 +12,9 @@ func UserRoutes(c *gin.Engine) {
 
 	user := c.Group("/user")
 	{
+		// user signup
 		user.POST("/signup", controllers.Signup)
+		// user login
 		user.POST("/login", controllers.Login)
 		user.GET("/validateuser", middleware.UserAuth, controllers.Validate)
 		user.GET("/products", controllers.ProductList)
