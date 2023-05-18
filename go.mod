@@ -2,33 +2,28 @@ module redkart
 
 go 1.19
 
-require github.com/twilio/twilio-go v1.2.2
+require (
+	github.com/logpacker/PayPal-Go-SDK v2.0.5+incompatible
+	github.com/netlify/PayPal-Go-SDK v1.0.2
+	github.com/stretchr/testify v1.8.1
+	github.com/stripe/stripe-go v70.15.0+incompatible
+	github.com/swaggo/files v1.0.0
+	github.com/swaggo/gin-swagger v1.5.3
+	github.com/swaggo/swag v1.8.9
+	github.com/twilio/twilio-go v1.2.2
+)
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
-	github.com/PuerkitoBio/purell v1.2.0 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
-	github.com/ghodss/yaml v1.0.0 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
 	github.com/go-openapi/jsonreference v0.20.1 // indirect
 	github.com/go-openapi/spec v0.20.7 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
-	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
-	github.com/logpacker/PayPal-Go-SDK v2.0.5+incompatible // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/netlify/PayPal-Go-SDK v1.0.2 // indirect
-	github.com/plutov/paypal/v4 v4.7.0 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
-	github.com/stretchr/testify v1.8.1 // indirect
-	github.com/stripe/stripe-go v70.15.0+incompatible // indirect
-	github.com/swaggo/files v1.0.0 // indirect
-	github.com/swaggo/gin-swagger v1.5.3 // indirect
-	github.com/swaggo/swag v1.8.9 // indirect
-	github.com/urfave/cli/v2 v2.23.7 // indirect
-	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
+	github.com/plutov/paypal v2.0.5+incompatible // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/tools v0.5.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
@@ -42,7 +37,7 @@ require (
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-jwt/jwt/v4 v4.4.3
-	github.com/golang/mock v1.6.0 // indirect
+	github.com/golang/mock v1.6.0
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -51,6 +46,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
 	github.com/jackc/pgtype v1.12.0 // indirect
 	github.com/jackc/pgx/v4 v4.17.2 // indirect
+	github.com/jinzhu/gorm v1.9.16
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/joho/godotenv v1.4.0
