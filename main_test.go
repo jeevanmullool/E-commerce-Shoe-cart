@@ -14,10 +14,10 @@ import (
 )
 
 func TestAdminLogin(t *testing.T) {
-	// Create a new instance of the Gin engine
+	// Create a new instance of the Gin
 	router := setupRouter()
 
-	// Define the JSON payload for the request
+	// Define the JSON payload
 	requestBody := map[string]string{
 		"Email":    "admin@example.com",
 		"Password": "password123",
@@ -37,7 +37,6 @@ func TestAdminLogin(t *testing.T) {
 	// Assert that the response status code is 200 OK
 	assert.Equal(t, http.StatusOK, rec.Code)
 
-	// Assert that the response body is empty ({} JSON object)
 	assert.Equal(t, "{}", rec.Body.String())
 }
 
