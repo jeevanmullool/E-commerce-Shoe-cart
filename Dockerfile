@@ -9,6 +9,6 @@ COPY *.go ./
 
 #RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
 
-#CMD ["/docker-gs-ping"]
-
 COPY main.go main.go
+
+CMD ["/docker-gs-ping"]
